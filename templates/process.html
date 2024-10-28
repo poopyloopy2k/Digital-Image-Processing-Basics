@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обработка изображения</title>
+</head>
+<body>
+    <h1>Изображение загружено: {{ filename }}</h1>
+    <p>Нажмите кнопку ниже, чтобы применить фильтр увеличения резкости:</p>
+    <form action="{{ url_for('apply_filter', filename=filename) }}">
+        <button type="submit">Увеличение резкости</button>
+    </form>
+</body>
+</html>
