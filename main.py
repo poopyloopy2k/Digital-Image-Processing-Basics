@@ -50,5 +50,6 @@ def apply_filter(filename):
 
     return render_template('result.html', original=filename, processed=processed_filename)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
