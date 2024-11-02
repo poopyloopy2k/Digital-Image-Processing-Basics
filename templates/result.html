@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Результат обработки</title>
+    <p>Метод обработки: {{ method }}</p>
 </head>
 <body>
     <h1>Результат обработки изображения</h1>
     <h2>Оригинальное изображение</h2>
     <img src="{{ url_for('get_uploaded_file', filename=original) }}" alt="Оригинальное изображение" style="max-width: 100%; height: auto;">
 
-    <h2>Обработанное изображение (увеличение резкости)</h2>
+    <h2>Обработанное изображение </h2>
     <img src="{{ url_for('get_uploaded_file', filename=processed) }}" alt="Обработанное изображение" style="max-width: 100%; height: auto;">
 </body>
 </html>

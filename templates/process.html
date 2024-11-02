@@ -11,5 +11,8 @@
     <form action="{{ url_for('apply_filter', filename=filename) }}">
         <button type="submit">Увеличение резкости</button>
     </form>
+    <form action="{{ url_for('sauvola_image', filename=filename) }}">
+        <button type="submit">Метод Сауволы</button>
+    </form>
 </body>
 </html>

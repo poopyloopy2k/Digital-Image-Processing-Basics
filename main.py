@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from skimage import io
+from skimage.filters import threshold_sauvola, threshold_niblack
+import numpy as np
 import os
+import cv2
 from PIL import Image, ImageEnhance
+from skimage.util import img_as_uint, img_as_ubyte
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -48,7 +53,23 @@ def apply_filter(filename):
     processed_path = os.path.join(app.config['UPLOAD_FOLDER'], processed_filename)
     img.save(processed_path)
 
-    return render_template('result.html', original=filename, processed=processed_filename)
+    return render_template('result.html', original=filename, processed=processed_filename, method = "Увеличение резкости")
+@app.route('/sauvola_image/<filename>')
+def sauvola_image(filename):
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    img = io.imread(file_path, as_gray=True)
+    sauvola_thres = threshold_sauvola(img,45,0.35, 77)
+    binary_saulova = img > sauvola_thres
+    sauvola_img = img_as_ubyte(binary_saulova)
+    sauvola_filename = f"sauvola_{filename}"
+    sauvola_path = os.path.join(app.config['UPLOAD_FOLDER'], sauvola_filename)
+    cv2.imwrite(sauvola_path, sauvola_img)
+
+    return render_template('result.html', original=filename, processed=sauvola_filename, method = "Метод Сауволы")
+
+#@app.route('/niblack_image/<filename>')
+# niblack_image(filename):
+#  file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
