@@ -71,5 +71,6 @@ def sauvola_image(filename):
 # niblack_image(filename):
 #  file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
