@@ -67,10 +67,28 @@ def sauvola_image(filename):
 
     return render_template('result.html', original=filename, processed=sauvola_filename, method = "Метод Сауволы")
 
-#@app.route('/niblack_image/<filename>')
-# niblack_image(filename):
-#  file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+@app.route('/niblack_image/<filename>')
+def niblack_image(filename):
+ file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+ img = io.imread(file_path, as_gray=True)
+ niblack_thres = threshold_niblack(img,45,0.35)
+ binary_niblack = img > niblack_thres
+ niblack_img = img_as_ubyte(binary_niblack)
+ niblack_filename = f"niblack_{filename}"
+ niblack_path = os.path.join(app.config['UPLOAD_FOLDER'], niblack_filename)
+ cv2.imwrite(niblack_path, niblack_img)
+ return render_template('result.html', original=filename, processed = niblack_filename, method = "Метод Ниблека")
 
+@app.route('/adaptive_image/<filename>')
+def adaptive_image(filename):
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    img = io.imread(file_path)
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    adaptive_thres = cv2.adaptiveThreshold(img_gray, 255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+    adaptive_filename = f"adaptive_{filename}"
+    adaptive_path = os.path.join(app.config['UPLOAD_FOLDER'], adaptive_filename)
+    cv2.imwrite(adaptive_path, adaptive_thres)
+    return render_template('result.html', original=filename, processed = adaptive_filename, method = "Гауссовая адаптивная пороговая обработка")
 
 if __name__ == '__main__':
     app.run(debug=True)

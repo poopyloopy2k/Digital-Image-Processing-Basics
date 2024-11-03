@@ -12,12 +12,16 @@
         <button type="submit">Увеличение резкости</button>
     </form>
 <br>
- <form action="{{ url_for('apply_filter', filename=filename) }}">
+ <form action="{{ url_for('niblack_image', filename=filename) }}">
         <button type="submit">Локальная пороговая обработка методом Ниблэка</button>
     </form>
 <br>
- <form action="{{ url_for('apply_filter', filename=filename) }}">
-        <button type="submit">Локальная пороговая обработка методом Ниблэка</button>
+ <form action="{{ url_for('sauvola_image', filename=filename) }}">
+        <button type="submit">Локальная пороговая обработка методом Сауволы</button>
+    </form>
+<br>
+ <form action="{{ url_for('adaptive_image', filename=filename) }}">
+        <button type="submit">Гауссовая адаптивная пороговая обработка</button>
     </form>
 </body>
 </html>
